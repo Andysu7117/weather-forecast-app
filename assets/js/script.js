@@ -15,8 +15,8 @@ let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
 function printResults(weatherData) {
   // Clear previous results
-  resultsEl.innerHTML = "";
-  fiveDayEl.innerHTML = "";
+  $(resultsEl).html("");
+  $(fiveDayEl).html("");
 
   // Display current weather conditions
   const cityName = weatherData.city.name;
@@ -24,26 +24,30 @@ function printResults(weatherData) {
   const currentHumidity = weatherData.list[0].main.humidity;
   const currentWindSpeed = weatherData.list[0].wind.speed;
   const currentIcon = weatherData.list[0].weather[0].icon;
-  const iconElement = document.createElement("img");
-  iconElement.src = "https://openweathermap.org/img/w/" + currentIcon + ".png";
+  const iconElement = $(
+    '<img src="https://openweathermap.org/img/w/' + currentIcon + ".png" + '">'
+  );
 
-  const header = document.createElement("h3");
-  header.innerHTML = cityName;
+  const header = $("<h3>" + cityName + "</h3>");
   header.append(iconElement);
 
-  const temperature = document.createElement("p");
-  temperature.textContent = "Temperature: " + currentTemperature + "°C";
+  const temperature = $(
+    '<p class="card-text">' +
+      "Temperature: " +
+      currentTemperature +
+      "°C" +
+      "</p>"
+  );
 
-  const humidity = document.createElement("p");
-  humidity.textContent = "Humidity: " + currentHumidity + "%";
+  const humidity = $(
+    '<p class="card-text">' + "Humidity: " + currentHumidity + "%" + "</p>"
+  );
 
-  const windSpeed = document.createElement("p");
-  windSpeed.textContent = "Wind Speed: " + currentWindSpeed + "KMH";
+  const windSpeed = $(
+    '<p class="card-text">' + "Wind Speed: " + currentWindSpeed + "KMH" + "</p>"
+  );
 
-  resultsEl.appendChild(header);
-  resultsEl.appendChild(temperature);
-  resultsEl.appendChild(humidity);
-  resultsEl.appendChild(windSpeed);
+  $(resultsEl).append(header, temperature, humidity, windSpeed);
 
   // Display 5-day forecast
   const forecast = weatherData.list;
@@ -62,39 +66,41 @@ function printResults(weatherData) {
       const humidity = list.main.humidity;
       const windSpeed = list.wind.speed;
 
-      const card = document.createElement("div");
-      card.className = "card";
+      const col = $('<div class="col"></div>');
 
-      const cardBody = document.createElement("div");
-      cardBody.className = "card-body";
+      const card = $('<div class="card"></div>');
 
-      const cardTitle = document.createElement("h5");
-      cardTitle.className = "card-title";
-      cardTitle.textContent = date;
+      const cardBody = $('<div class="card-body"></div>');
 
-      const iconElement = document.createElement("img");
-      iconElement.src = "https://openweathermap.org/img/w/" + icon + ".png";
+      const cardTitle = $('<h5 class="card-title">' + date + "</h5>");
 
-      const tempElement = document.createElement("p");
-      tempElement.className = "card-text";
-      tempElement.textContent = "Temperature: " + temperature + "°C";
+      const iconElement = $(
+        '<img src="https://openweathermap.org/img/w/' + icon + ".png" + '">'
+      );
 
-      const windElement = document.createElement("p");
-      windElement.className = "card-text";
-      windElement.textContent = "Wind Speed: " + windSpeed + "KMH";
+      const tempElement = $(
+        '<p class="card-text">' + "Temperature: " + temperature + "°C" + "</p>"
+      );
 
-      const humidityElement = document.createElement("p");
-      humidityElement.className = "card-text";
-      humidityElement.textContent = "Humidity: " + humidity + "%";
+      const windElement = $(
+        '<p class="card-text">' + "Wind Speed: " + windSpeed + "KMH" + "</p>"
+      );
 
-      cardBody.appendChild(cardTitle);
-      cardBody.appendChild(iconElement);
-      cardBody.appendChild(tempElement);
-      cardBody.appendChild(windElement);
-      cardBody.appendChild(humidityElement);
+      const humidityElement = $(
+        '<p class="card-text">' + "Humidity: " + humidity + "%" + "</p>"
+      );
 
-      card.appendChild(cardBody);
-      fiveDayEl.appendChild(card);
+      cardBody.append(
+        cardTitle,
+        iconElement,
+        tempElement,
+        windElement,
+        humidityElement
+      );
+
+      card.append(cardBody);
+      col.append(card);
+      $(fiveDayEl).append(col);
     } else {
       return;
     }
@@ -108,39 +114,41 @@ function printResults(weatherData) {
     const humidity = weatherData.list[39].main.humidity;
     const windSpeed = weatherData.list[39].wind.speed;
 
-    const card = document.createElement("div");
-    card.className = "card";
+    const col = $('<div class="col"></div>');
 
-    const cardBody = document.createElement("div");
-    cardBody.className = "card-body";
+    const card = $('<div class="card"></div>');
 
-    const cardTitle = document.createElement("h5");
-    cardTitle.className = "card-title";
-    cardTitle.textContent = date;
+    const cardBody = $('<div class="card-body"></div>');
 
-    const iconElement = document.createElement("img");
-    iconElement.src = "https://openweathermap.org/img/w/" + icon + ".png";
+    const cardTitle = $('<h5 class="card-title">' + date + "</h5>");
 
-    const tempElement = document.createElement("p");
-    tempElement.className = "card-text";
-    tempElement.textContent = "Temperature: " + temperature + "°C";
+    const iconElement = $(
+      '<img src="https://openweathermap.org/img/w/' + icon + ".png" + '">'
+    );
 
-    const windElement = document.createElement("p");
-    windElement.className = "card-text";
-    windElement.textContent = "Wind Speed: " + windSpeed + "KMH";
+    const tempElement = $(
+      '<p class="card-text">' + "Temperature: " + temperature + "°C" + "</p>"
+    );
 
-    const humidityElement = document.createElement("p");
-    humidityElement.className = "card-text";
-    humidityElement.textContent = "Humidity: " + humidity + "%";
+    const windElement = $(
+      '<p class="card-text">' + "Wind Speed: " + windSpeed + "KMH" + "</p>"
+    );
 
-    cardBody.appendChild(cardTitle);
-    cardBody.appendChild(iconElement);
-    cardBody.appendChild(tempElement);
-    cardBody.appendChild(windElement);
-    cardBody.appendChild(humidityElement);
+    const humidityElement = $(
+      '<p class="card-text">' + "Humidity: " + humidity + "%" + "</p>"
+    );
 
-    card.appendChild(cardBody);
-    fiveDayEl.appendChild(card);
+    cardBody.append(
+      cardTitle,
+      iconElement,
+      tempElement,
+      windElement,
+      humidityElement
+    );
+
+    card.append(cardBody);
+    col.append(card);
+    $(fiveDayEl).append(col);
   }
 }
 
