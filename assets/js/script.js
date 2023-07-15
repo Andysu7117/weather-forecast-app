@@ -1,3 +1,4 @@
+// Global Variables
 const apiKey = "9d4617c693699ddd5b2eae0bab5fad04";
 const searchFormEl = document.querySelector("#search-form");
 const forecastTitleEl = document.querySelector("#forecast-title");
@@ -11,20 +12,16 @@ const date = new Date();
 let currentDay = String(date.getDate()).padStart(2, "0");
 let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
 let currentYear = date.getFullYear();
-// we will display the date as DD-MM-YYYY
 let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
+// Showing result on page
 function printResults(weatherData) {
   // Clear previous results
   $(resultsEl).html("");
   $(fiveDayEl).html("");
   $(forecastTitleEl).html("");
 
-  const forecastTitle = $("<h2>5 Day Forecast:</h2>");
-  $(forecastTitleEl).append(forecastTitle);
-
   $(resultsEl).css("border", "1px solid black");
-  // Display current weather conditions
   const cityName = weatherData.city.name;
   const onlyDate = weatherData.list[0].dt_txt.split(" ");
   const date = onlyDate[0];
@@ -58,7 +55,10 @@ function printResults(weatherData) {
 
   $(resultsEl).append(header, temperature, humidity, windSpeed);
 
-  // Display 5-day forecast
+  // To display 5 day weather forecast
+  const forecastTitle = $("<h2>5 Day Forecast:</h2>");
+  $(forecastTitleEl).append(forecastTitle);
+
   const forecast = weatherData.list;
   const daysToShow = 5;
   const forecastLength = forecast.length;
@@ -115,6 +115,7 @@ function printResults(weatherData) {
     }
   });
 
+  // For if on list items satisfy conditions
   if (fiveDayEl.children.length < daysToShow && forecastLength > 0) {
     const onlyDate = weatherData.list[39].dt_txt.split(" ");
     const date = onlyDate[0];
@@ -161,6 +162,7 @@ function printResults(weatherData) {
   }
 }
 
+// Fetching weather forecast form longitude and latitude coordinates
 function getWeatherForecast(latitude, longitude) {
   const locQueryUrl = "https://api.openweathermap.org/data/2.5/forecast?";
   const queryUrl =
@@ -186,6 +188,7 @@ function getWeatherForecast(latitude, longitude) {
     });
 }
 
+// Getting coordinates from city name
 function getCoordinates(query) {
   const locQueryUrl = "https://api.openweathermap.org/geo/1.0/direct?q=";
 
@@ -204,13 +207,16 @@ function getCoordinates(query) {
         resultsEl.innerHTML = "";
         fiveDayEl.innerHTML = "";
       } else {
+        const cityName = coordRes[0].name;
         const latitude = coordRes[0].lat;
         const longitude = coordRes[0].lon;
         getWeatherForecast(latitude, longitude);
+        addToSearchHistory(cityName);
       }
     });
 }
 
+// Saving search to local storage
 function saveSearchHistory(cityName) {
   let searchHistory = localStorage.getItem("searchHistory");
   if (!searchHistory) {
@@ -221,12 +227,11 @@ function saveSearchHistory(cityName) {
 
   searchHistory.push(cityName);
 
-  // Add the new city name to the search history
-
   // Save the updated search history to localStorage
   localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
 }
 
+// adding searched city to webpage as a button
 function addToSearchHistory(cityName) {
   let searchHistory = localStorage.getItem("searchHistory");
   if (!searchHistory) {
@@ -251,6 +256,7 @@ function addToSearchHistory(cityName) {
   saveSearchHistory(cityName);
 }
 
+// creating buttons for local storage items
 function addFromLocalStorage(cityName) {
   const btnDiv = document.createElement("div");
   btnDiv.className = "d-grid gap-2";
@@ -263,6 +269,7 @@ function addFromLocalStorage(cityName) {
   searchHistoryEl.appendChild(btnDiv);
 }
 
+// loading search history from local storage
 function loadSearchHistory() {
   let searchHistory = localStorage.getItem("searchHistory");
   if (searchHistory) {
@@ -273,14 +280,16 @@ function loadSearchHistory() {
   }
 }
 
+// clearing search history div
 function clearSearchHistory() {
   localStorage.removeItem("searchHistory");
   searchHistoryEl.innerHTML = "";
 }
 
+// for search
 function handleSearchFormSubmit(event) {
   event.preventDefault();
-  const searchInputVal = document.querySelector("#search-input").value;
+  const searchInputVal = $("#search-input").val();
 
   if (!searchInputVal) {
     $("#no-input").modal("show");
@@ -290,7 +299,7 @@ function handleSearchFormSubmit(event) {
   const query = searchInputVal.replace(" ", "+");
 
   getCoordinates(query);
-  addToSearchHistory(searchInputVal);
+  $("#search-input").val("");
 }
 
 function handleCityClick(event) {
