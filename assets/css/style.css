@@ -1,7 +1,23 @@
+#today-forecast {
+  padding: 25px;
+  margin-right: 4%;
+}
+
+#forecast-title {
+  padding-top: 50px;
+}
+
 div {
   padding: 5px;
 }
 
 .card {
-  padding: 1rem;
+  padding: 0.5rem;
+  width: 80%;
+  height: 100%;
+}
+
+.card-body {
+  height: 100%;
+  width: 80%;
 }

@@ -1,5 +1,6 @@
 const apiKey = "9d4617c693699ddd5b2eae0bab5fad04";
 const searchFormEl = document.querySelector("#search-form");
+const forecastTitleEl = document.querySelector("#forecast-title");
 const resultsEl = document.querySelector("#today-forecast");
 const fiveDayEl = document.querySelector("#five-day-forecast");
 const searchHistoryEl = document.querySelector("#search-history");
@@ -17,9 +18,16 @@ function printResults(weatherData) {
   // Clear previous results
   $(resultsEl).html("");
   $(fiveDayEl).html("");
+  $(forecastTitleEl).html("");
 
+  const forecastTitle = $("<h2>5 Day Forecast:</h2>");
+  $(forecastTitleEl).append(forecastTitle);
+
+  $(resultsEl).css("border", "1px solid black");
   // Display current weather conditions
   const cityName = weatherData.city.name;
+  const onlyDate = weatherData.list[0].dt_txt.split(" ");
+  const date = onlyDate[0];
   const currentTemperature = weatherData.list[0].main.temp;
   const currentHumidity = weatherData.list[0].main.humidity;
   const currentWindSpeed = weatherData.list[0].wind.speed;
@@ -28,7 +36,8 @@ function printResults(weatherData) {
     '<img src="https://openweathermap.org/img/w/' + currentIcon + ".png" + '">'
   );
 
-  const header = $("<h3>" + cityName + "</h3>");
+  const header = $("<h1>" + cityName + "</h1>");
+  header.append(" (" + date + ")");
   header.append(iconElement);
 
   const temperature = $(
