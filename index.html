@@ -50,6 +50,36 @@
           </div>
         </div>
       </div>
+      <div
+        class="modal fade"
+        id="no-results"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">No results found</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row mx-0">
         <div class="col-12 col-md-2 p-3">
           <h2>Search for a City:</h2>
@@ -67,6 +97,12 @@
             </div>
           </form>
           <hr />
+          <div id="search-history"></div>
+          <div class="d-grid gap-2">
+            <button id="clear-history" class="btn btn-primary">
+              Clear History
+            </button>
+          </div>
         </div>
 
         <div class="col-12 col-md-10 p-3">
