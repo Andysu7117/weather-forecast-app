@@ -1,6 +1,6 @@
 #today-forecast {
   padding: 25px;
-  margin-right: 4%;
+  margin-right: 3%;
 }
 
 #forecast-title {
@@ -13,11 +13,11 @@ div {
 
 .card {
   padding: 0.5rem;
-  width: 80%;
+  width: 85%;
   height: 100%;
 }
 
 .card-body {
   height: 100%;
-  width: 80%;
+  width: 85%;
 }
